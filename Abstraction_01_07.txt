@@ -1,0 +1,313 @@
+
+
+Abstract classes:
+---------------------
+Abstract class: The class which having 0 or more abstract methods.
+
+void m1();
+
+Concreate class(0 abstract method): In this none of the abstract methods are available.
+
+void m1(){
+
+}
+
+Abstract method: The method which doesnt have method implementation.
+
+abstract void yash();
+
+
+concrete method: Method prototype along with it definition.
+void m4()
+
+--> We dosent create object for the abstract class. We can create the reference
+Example:
+abstract class Sample
+{
+	void m1(){
+		
+}
+	public static void main(Strings args[]){
+		Sample s=new Sample();//Error
+		Sample s; //Reference
+		
+	}	
+}
+
+
+----- Necesscity of implement the Abstract classes:--------
+
+abstract class College
+{
+	abstract void writeExams();
+	abstract void giveMarks();
+	abstract void publishResults();
+	void displayCirculars(){
+		System.out.println("Circular is given by the college");
+	}
+}
+
+//The below is concrete class. Because it doesn't have any abstract methods. We can create the object to the ExamCell.
+class ExamCell extends College
+{
+	void publishResults(){
+		System.out.println("Exam cell will publish the results");
+	}
+	void writeExams(){
+
+	}
+	void giveMarks(){
+
+	}
+
+}
+class Faculty extends ExamCell{
+
+	void giveMarks(){
+		System.out.println("Faculty give the marks");
+	}
+}
+class Student extends ExamCell(){
+
+	void writeExams(){
+		System.out.println("Students can write the exam..");
+	}
+}
+class Sample{
+	public static void main(String args[]){
+		//ExamCell e=new ExamCell();
+		//e.publishResults();
+		//e.displayCirculars();
+
+		/* Faculty f =new Faculty();
+		f.displayCirculars();
+		f.publishResults();
+		f.giveMarks(); 
+		*/
+	
+		/* Student s=new Student();
+		s.displayCirculars();
+		s.publishResults();
+		s.writeExams();
+
+		*/
+
+		//Reference variable of the abstract class
+
+		College c;
+		c=new ExamCell();
+		c.displayCirculars();
+		c.publishResults();
+		
+		c=new Faculty();
+		c.displayCirculars();
+		c.publishResults();
+		c.giveMarks();
+	
+		c=new Student();
+		c.displayCirculars();
+		c.publishResults();
+
+c		c.writeExams();
+	}
+}
+
+--> If there is any class extends from the abstract class Which has some responsibilities. Then that is provide the all method body to the super class methods.
+
+
+Example - 2:
+
+class parent {
+	void land(){
+		System.out.println("5 Acers Land");
+	}
+}
+
+class child extends parent{
+	void land(){
+		System.out.println("5+5 acers land");
+	}
+}
+
+--> In the class default all members having default attribute.
+or If we doesn't provide any explicit excess specifier then that is "default" specifier. Do not downcast the access specifier. It means default to private speciiffer.
+Public Protect private
+
+-->To maintain the same accessibility to the method or doesn't provide downcast.
+
+
+-------------Interfaces--------------
+It is container where we have to store combination of constants and abstract methods.
+--> In the classes all have default accessibility. But in the interface all members having public access specifier.
+-->protected and private is not used for interfaces.
+-->Object is not created for the interface. Because it has incomplete methods or abstract methods.
+--> example
+Syntax:
+interface InterfaceName{
+
+}
+
+Example:
+interface MyInterface{
+	int A=10; //public final static int A=10;
+
+	float PI=3.14f;
+
+	void m1(); //public abstract void m1()
+}
+
+Example - 2:
+interface MyInterface {
+	int A=5;
+	public static final int B=6;
+	void m1();
+}
+
+Example - 3: To maintain the same excessiblity by inheritance.
+interface MyInterface {
+	int A=5;
+	public static final int B=6;
+	void m1();
+}
+class Test implements MyInterface {
+	public void m1(){
+		System.out.println("hello");
+	}
+}
+
+Example - 4:
+
+interface MyInterface {
+	int A=5;
+	public static final int B=6;
+	void m1();
+}
+interface MyInterface1 {
+
+	void m3();
+}
+class Test implements MyInterface,MyInterface1 {
+	public void m1(){
+		System.out.println("hello");
+	}
+	public void m2(){
+		System.out.println("hello");
+	}
+}
+
+Example - 5:
+
+interface MyInterface {
+	int A=5;
+	public static final int B=6;
+	void m1();
+}
+interface MyInterface1 extends MyInterface {
+
+	void m3();
+}
+class Test implements MyInterface1 {
+	public void m1(){
+		System.out.println("hello");
+	}
+	public void m2(){
+		System.out.println("hello");
+	}
+}
+
+--------Real Time Example for interfaces--------------
+interface car
+{
+	int seats=4;
+	void engine();
+	void breaks();
+	void steering();
+}
+class Toyota implements car
+{
+	public void engine(){
+		System.out.println("Disel");
+	}
+	public void breaks(){
+		System.out.println("Normal");
+	}
+	public void steering(){
+		System.out.println("Normal");
+	}
+
+}
+class Benz implements car
+{
+	public void engine(){
+		System.out.println("Petrol");
+	}
+	public void breaks(){
+		System.out.println("Disc");
+	}
+	public void steering(){
+		System.out.println("Normal");
+	}
+}
+class Check{
+	public static void main(String args[]){
+		Benz b=new Benz();
+		b.engine();
+		b.breaks();
+		b.steering();
+
+		Toyota t=new Toyota();
+		t.engine();
+		t.breaks();
+		t.steering();	
+
+
+		Car c; //Reference Variable for the interface
+		c=new Benz();
+		c.engine();
+		c.breaks();
+		c.steering();
+
+		c=new Toyota();
+		c.engine();
+		c.breaks();
+		c.steering();
+		
+	}
+}
+
+--> Marker Interface -- interface InterfaceName
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
