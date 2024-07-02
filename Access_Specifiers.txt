@@ -1,0 +1,30 @@
+---------Access Modifiers-----------
+Private: It is used within the class.
+public class Student{
+	private int sid;
+	String sname;
+	double smarks;
+	public void setDetails(int id,String name,double marks){
+		sid=id;
+		sname=name;
+		smarks=marks;
+	}
+	public void getDetails(){
+		System.out.println("Student Id: "+sid+"\nStudent name: "+sname+"\nStudent marks: "+smarks);
+	}
+	public static void main(String args[]){
+	    Student s=new Student();
+	    s.setDetails(577,"yaswanth",77.77);
+	   s.getDetails();
+	}
+
+}
+
+
+Default: If you doesn't give any access specifier in the class(variable method). Default is the default access specifier. It is used within class and within package.
+Protected: It is used in within class, within package and outside package by subclass only.
+Public: It is used anywhere in the packages.
+
+javap java.lang.Integer 
+
+
