@@ -19,12 +19,30 @@ public class Student{
 	}
 
 }
+.Private is not accepted to the class.
+
 
 
 Default: If you doesn't give any access specifier in the class(variable method). Default is the default access specifier. It is used within class and within package.
+
 Protected: It is used in within class, within package and outside package by subclass only.
+.Protected is not apply to the class.
+
 Public: It is used anywhere in the packages.
+.Public is accepted to apply for the class.
+
 
 javap java.lang.Integer 
 
+Interfaces:
+->By default interfaces have public accessbility.
+->We should not apply protected keyword to the interfaces. Default,private also not applicable to interfaces.
 
+----COnstructor:----
+->We can apply all access specifier to its.
+->We can set constructor as private. It doesn't create a object for this in another class.
+
+---variables and methods in class-----
+->In the class public,protected,private keywords is apply for the variable and methods.
+
+-->you should not apply any access modifier for the static.

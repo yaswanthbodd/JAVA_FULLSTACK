@@ -1,0 +1,116 @@
+--> In the real time scenario, If we have any new bussiness logic is available and that have solution. That is release in the form of "jar" file.
+->In the jar file we have collections of packages are available.
+-> jar (JAVA ARchive).
+
+->jad - Java Decomplier    (jad -s.java Scanner.class)
+->All built packages are available in rt.jar file this is available in java file.
+->In Upcoming while at the time of learning advance java concepts(structs,hypernet,springboot,restapi,pojo). we defintly use the maven repository.
+
+Lbrce.jar--->com.lbrce--
+			|
+			|
+			com.lbrce.cse --> Student.class
+				      -->Faculty.class
+				      -->NT.class
+			com.lbrce.csm -->Student.class
+				      -->Faculty.class
+				      -->NT.class
+				      
+				      
+--> Along with the jar file we can also release the documentation(api) of that jar file.
+
+------Creation of the JAR File----------
+
+1. First we need to write the business logic in the source file (.*java).(AreaOfTheCircle.java , ISimpleInterestCalc.java)
+
+2) Compile the source code (*.java) and generate the *.class files in the respective packages.
+
+	javac -d . *.java --> It runs all the files in that folder and create the directory based package name.
+	javac -d . AreaOfTheCircle.java
+	javac -d . filename.java
+	--> To store in the different location (javac -d location *.java) (or) javac -d D:\ *.java
+		
+3) Create the jar file for the available classes.
+	Syntax: jar -cvf jarfilename.jar yourpackagename     (cvf- v-verbose(optional), c- create archieve, f-filename)
+		jar -cvf yash.jar com
+		
+4)You can create the java documentation for those class.
+	syntax: javadoc *.java
+	
+--------COmments -------------
+// single line comments
+/* Multiline Comments */
+
+/** This is documentation comment */
+
+-----------------End User Side ---------------------
+if you want you use it download the jar file.
+
+-> If you want to use the external jar file.(nsr.jar)
+	Method-1:
+	-> Keep the above jar file in the lib folder of both jdk and jre in the java installation location 
+		(C:\Program Files\Java\jdk1.8.0_261\jre\lib\ext)
+		(C:\Program Files\Java\jre1.8.0_261\lib\ext)
+		
+		Please Close and reopen the command line prompt 
+		
+	Method - 2:
+	-> Set the temporary class path for the jar file.
+	cmd: set classpath=%classpath%;.;jarfilepathwithname;.;
+	
+	check the existing classpath that are available are not -> Print the existing classpath (echo %classpath%)
+	set classpath=%classpath%;.;nsr.jar;.;    (or) set classpath=%classpath%;.;D:\nsr.jar;.;
+	
+	Method - 3:(Permenant ClassPath)
+	-> set the permenant classPath
+	--> Enter the environment (env). Click the environment varibles .
+	--> check the classpath variable if not have create the new(variable name: classpath,  variable value: C:\Users\home\Desktop\MyProject\nsr.jar ) 
+	--> Supose you have existing classpath then give the path after (;.;).
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
