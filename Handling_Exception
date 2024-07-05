@@ -1,0 +1,343 @@
+---------------Exception Handling-----------
+Def: The process of responding to unwanted or unexpected events when a computer program runs.
+-> We have two different types expections are there 'checked(Complie time)' and 'unchecked(Run time)' Exceptions.
+Super class of all Exception handling is 'Throwable class'.
+
+Checked Exception: It rise exception at complie time. (Ex: IOException...)
+Unchecked Exception: It rises at run time. (Ex:ArthimeticException, NullPointerException)
+Error: It is irrecoverable.Until and unless you changed the code.
+
+Exception Handler Blocks:
+-try
+-catch
+-finally -> It is always executed whether exception is handled or not. It is associated with the try and catch block.
+-Throw -> It is used for to generte the custom expections.
+-throws -> 
+
+
+----------------Examples--------------------
+Program - 1:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			int d=50/0;
+			System.out.println(d);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+Output:
+java.lang.ArithmeticException: / by zero
+
+Program-2:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+
+			int d[]= {1,2,3,4,5};
+			System.out.println(d[5]);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+Output:
+java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
+
+
+Program-3:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+
+			String s="yash";
+			int n=Integer.parseInt(s);
+			System.out.println(n);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+Output:
+java.lang.NumberFormatException: For input string: "yash"
+
+Program-4:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			int d=50/0;
+			System.out.println(d);	
+			int a[]= {1,2,3,4,5};
+			System.out.println(a[5]);
+			String s="yash";
+			int n=Integer.parseInt(s);
+			System.out.println(n);
+		}
+		catch(ArithmeticException e) {
+			System.out.println("Don't divide by zero");
+		}catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Array Index out of Bounds");
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+---> If we have multiple exceptions. It is shows the first Exception.
+
+---Mutiple Try Blocks-------------
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			int d=50/2;
+			System.out.println(d);
+			try {
+				int a[]= {1,2,3,4,5};
+				System.out.println(a[4]);
+				try {
+					String s="yash";
+					int n=Integer.parseInt(s);
+					System.out.println(n);
+				}catch(NumberFormatException e) {
+					System.out.println("Input is wrong");
+				}
+			}catch(ArrayIndexOutOfBoundsException e) {
+				System.out.println("Array Index Out of Bound Exception");
+			}
+		}
+		catch(ArithmeticException e) {
+			System.out.println("Don't divide by zero");
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
+
+
+Program - 6:
+
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			int d=50/0;
+			System.out.println(d);
+			try {
+				int a[]= {1,2,3,4,5};
+				System.out.println(a[5]);
+				try {
+					String s="yash";
+					int n=Integer.parseInt(s);
+					System.out.println(n);
+				}catch(NumberFormatException e) {
+					System.out.println("Input is wrong");
+				}
+			}catch(ArrayIndexOutOfBoundsException e) {
+				System.out.println("Array Index Out of Bound Exception");
+			}
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Don't divide by zero");
+		}
+	}
+
+}
+
+
+Output:
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandling/exceptionhandling.CheckArith.main(CheckArith.java:8)
+	
+Program-7:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			int d=50/0;
+			System.out.println(d);
+		}catch(ArithmeticException e) {
+			System.out.println("Don't divide by zero");
+		}finally {
+			System.out.println("You got the message");
+		}
+		
+	}
+}
+
+Output:
+Don't divide by zero
+You got the message
+
+Program - 8:
+package exceptionhandling;
+
+public class CheckArith {
+
+	public static void main(String[] args) throws ArithmeticException {
+		int d=50/0;
+		System.out.println(d);
+	}
+}
+
+Output:
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at exceptionhandling/exceptionhandling.CheckArith.main(CheckArith.java:6)
+
+Program-9:
+package exceptionhandling;
+import java.io.*;
+
+public class CheckArith {
+
+	public static void main(String[] args) throws FileNotFoundException,IOException {
+		File f=new File("input.txt");
+		FileWriter fp=new FileWriter(f);
+		fp.write("Hello World");
+		fp.close();
+		FileReader fp1=new FileReader(f);
+		BufferedReader br=new BufferedReader(fp1);
+		System.out.println(br.readLine());
+		fp1.close();
+		br.close();
+	}
+}
+
+Output:
+Hello World
+
+Program-10:
+package exceptionhandling;
+import java.io.*;
+import java.util.Scanner;
+
+public class CheckArith {
+
+	static void validWeight(int weight) {
+		if(weight<38) {
+			throw new ArithmeticException();
+		}
+	}
+	public static void main(String[] args) throws FileNotFoundException,IOException {
+		try {
+			Scanner sc=new Scanner(System.in);
+			int n=sc.nextInt();
+			validWeight(n);
+			System.out.println("You are heavyWeight");
+			
+		}catch(ArithmeticException e) {
+			System.out.println("You are underWeight");
+		}
+	}
+}
+
+Output:
+38
+You are heavyWeight
+
+------------------Assertions------------------------------
+=> It is used for testing purposes during the development. 
+-----Two ways----
+first way: assert expression;
+second : assert expression1:expression2;
+
+package exceptionhandling;
+import java.io.*;
+import java.util.Scanner;
+
+public class CheckArith {
+
+	public static void main(String[] args) throws FileNotFoundException,IOException {
+			Scanner sc=new Scanner(System.in);
+			int n=sc.nextInt();
+			assert n<38:"Heavy Weight";
+			System.out.println(n);
+		
+	}
+}
+
+
+Excute : java -ea filename
+
+Program-12:
+package exceptionhandling;
+import java.io.*;
+import java.util.Scanner;
+
+public class CheckArith {
+
+	public static void main(String[] args) throws FileNotFoundException,IOException {
+		try {
+			int a[]= {1,2,3,4,5};
+			System.out.println("Hello");
+		}finally {
+			System.out.println("Finally Block");
+		}
+	}
+}
+
+Output:
+Hello
+Finally Block
+
+-------------------------Thread-----------------------------
+=>Life cycle of Thread:-------------
+-New
+-Running
+-Runnable
+-Non-Runnable(Blocked)
+-Terminated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
