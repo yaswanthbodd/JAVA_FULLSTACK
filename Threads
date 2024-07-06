@@ -1,0 +1,277 @@
+------------------------------Threads------------------------------------
+package threadprograms;
+
+public class DemoThread extends Thread{
+	public void run() {
+		System.out.println("This is thread");
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DemoThread dt=new DemoThread();
+		dt.start();
+	}
+
+}
+
+
+Program -2:
+package threadprograms;
+class Demo extends Thread{
+	public void run() {
+		System.out.println("This is thread");
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt=new Demo();
+		dt.start();
+	}
+
+}
+
+Program -3:
+package threadprograms;
+
+class Demo implements Runnable{
+	public void run() {
+		System.out.println("This is thread");
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt=new Demo();
+		Thread t1=new Thread(dt);
+		t1.start();
+	}
+
+}
+
+-------sleep method--------------
+ Program - 4:
+ 
+ package threadprograms;
+
+class Demo extends Thread{
+	public void run() {
+		try {
+			Thread.sleep(2000);
+		}catch(InterruptedException e) {
+			System.out.println(e);
+		}
+		for(int i=1;i<=5;i++) {
+		System.out.println(i);
+		}
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt=new Demo();
+		dt.start();
+	}
+
+}
+
+
+Program - 5:
+package threadprograms;
+
+class Demo extends Thread{
+	public void run() {
+		for(int i=1;i<=5;i++) {
+		try {
+			Thread.sleep(2000);
+		}catch(InterruptedException e) {
+			System.out.println(e);
+		}
+		
+		System.out.println(i);
+		}
+		System.out.println("Program end");
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt=new Demo();
+		dt.start();
+	}
+
+}
+
+---------------join----------------------------
+
+Program:
+
+package threadprograms;
+
+class Demo extends Thread{
+	public void run() {
+		System.out.println(Thread.currentThread().getName());
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt1=new Demo();
+		Demo dt2=new Demo();
+		Demo dt3=new Demo();
+		dt1.setName("ThreadJoin");
+		dt1.start();
+		try {
+			dt1.join();
+		}catch(InterruptedException e) {
+			System.out.println(e);
+		}
+		dt2.start();
+		dt3.start();
+	}
+
+}
+
+----Daemon Thread--------------------
+
+Program -6:
+package threadprograms;
+
+class Demo extends Thread{
+	public void run() {
+		if(Thread.currentThread().isDaemon()) {
+			System.out.println("Daemon Working");
+		}else {
+			System.out.println("Normal Thread Working");
+		}
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo dt1=new Demo();
+		Demo dt2=new Demo();
+		Demo dt3=new Demo();
+		dt1.setDaemon(true);
+		dt1.start();
+		dt2.start();
+		dt3.start();
+		
+	}
+
+}
+
+Output:
+Normal Thread Working
+Daemon Working
+Normal Thread Working
+
+------------------Priorities of the Threads-----------------
+=> MIN_PRIORITY:1
+=> NORM_PRIORITY:5
+=> MAX_PRIORITY:10
+
+
+---------Synchronization: It takes currrent object reference  ---------------------
+package threadprograms;
+
+class Demo{
+	synchronized void print(int n) {
+		for(int i=1;i<=n;i++) {
+			System.out.println(i);
+		}
+	}
+}
+
+class MyThread extends Thread{
+	Demo d;
+	MyThread(Demo d){
+		this.d=d;
+	}
+	public void run() {
+		d.print(5);
+	}
+}
+class MyThread1 extends Thread{
+	Demo d;
+	MyThread1(Demo d){
+		this.d=d;
+	}
+	public void run() {
+		d.print(10);
+	}
+}
+class MyThread2 extends Thread{
+	Demo d;
+	MyThread2(Demo d){
+		this.d=d;
+	}
+	public void run() {
+		d.print(15);
+	}
+}
+public class DemoThread extends Thread{
+	
+	public static void main(String[] args) {
+		Demo dt=new Demo();
+		MyThread mt=new MyThread(dt);
+		MyThread1 mt1=new MyThread1(dt);
+		MyThread2 mt2=new MyThread2(dt);
+		
+		mt.start();
+		mt1.start();
+		mt2.start();
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
