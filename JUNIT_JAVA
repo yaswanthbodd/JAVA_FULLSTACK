@@ -1,0 +1,435 @@
+JUNIT (Java Unit Testing ) Framework:
+-----------------------------------------------
+
+
+
+---------------------Java Annotations----------------------------
+
+=> It is simple tag in java. which is going to give metadata about the java elements.
+=> We can apply it for classes,variables,methods..etc..,(Everything in java)
+------Syntax:   @annotationName
+
+------Example:
+
+
+
+
+
+
+--Inbuilt Annotation in the Java---
+1) @Override :
+
+package annotations;
+
+class Test{
+	void myMethod() {
+		
+	}
+}
+
+public class Sample extends Test{
+	@Override
+	void myMethod() {
+		
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+
+
+2) @Suppresswarnings :
+
+package annotations;
+import java.util.*;
+
+public class Sample {
+
+	public static void main(String[] args) {
+		@SuppressWarnings("rawtypes")
+		ArrayList al=new ArrayList();
+	}
+
+}
+
+
+3) @Deprecated : It is alive in the eariler version but not use in the current version.
+
+package annotations;
+public class Sample {
+	@Deprecated
+	void m1() {
+		System.out.println("m1 method");
+	}
+
+	public static void main(String[] args) {
+		Sample s=new Sample();
+		s.m1();
+	}
+
+}
+
+Output:
+m1 method
+
+
+
+----------------------JAVA UNIT TESTING--------------------------------
+	
+
+1) requirements
+2) analysis
+3) Design
+4) implementation
+5) Testing
+6) Deployment
+7) Maintenance
+
+
+---Unit Testing: Step by step to check the code.
+2 types:
+	1. Manual Testing: As a developer or program to check every program line by line. (Ex: Faculty Check the Student Programs manual)
+	2. automated Testing: To support of tool or framework to test the programs. (Ex: GeekforGeeks etc..,)
+
+
+Def: JUNIT is the framework. It is a automated testing.
+=> The JUNIT External jar files are required to do the automated testing in java.
+=> We need to download those external jars for using the JUNIT.
+=> "org.junit" is package is in the jar file.
+=> If you want Write the test case @Test.
+=> @Test(timeout=1000) annotation specifies that method will be failled after milliseconds
+=> @BeforeClass - It is excuted before at the time of running.
+=> @AfterClass - It is excuted after excution of class
+=> @Before - It is excuted each and every.
+=> @After
+
+
+Example:
+
+class Test{
+	@BeforeClass
+	@Before
+	@Test
+	test1
+	@After
+	
+	@Before
+	@Test
+	test2
+	@After
+	
+	@Before
+	@Test
+	test3
+	@After
+	
+	@AfterClass
+}
+
+=> In the org.junit, We have important class is there 'Assert class'.
+-----Methods in Assert Class:-----
+1) void assertEquals(boolean expected,boolean actual) : Checks the equals. It is Overloaded.
+
+
+===================>      Required Jar Files for the JNUIT is "junit4.jar and hamcrest-core.jar" files.
+
+----Real time examples----------
+
+int a[] = {1,2,3,4,5};
+
+Output: 5
+
+int a[]={5,4,3,2,9};
+
+Output: 9
+
+---Code:
+int find(int a[])
+{
+	max=a[0];
+	for(int i=1;i<a.length();i++){
+		if(max>a[i]){
+			max=a[i];
+		}
+	}
+	return max;
+}
+
+
+---Steps---
+
+Create the new Project yashproject . In this we have two classes.
+1)ActualClass (business logic)
+2)TestClass (test Validation)
+
+
+-------------Steps for the Junit Testing-----------------
+Step - 1: Create a normal project in the eclipse with name is "yashproject".
+	It generates some hirerachy. In this project we have ( JRE System Library, src(empty folder)).
+	
+Step - 2: Click the src folder and right click it, and create a new class with classname is "ActualClass" to remove the package name.
+	
+	public class ActualClass{
+	
+	}
+	Same as and create another class "TestClass".
+	public class TestClass{
+	
+	}
+	
+Step - 3: Write the bussiness logic in the ActualClass.
+
+	
+	public class ActualClass {
+		static int findMax(int a[]) {
+			int max=a[0];
+			for(int i=1;i<a.length;i++) {
+				if(a[i]>=max) {
+					max=a[i];
+				}
+			}
+			return max;
+		}
+		
+		static int lastDigit(int n) {
+			return Math.abs(n%10);
+		}
+	}
+	
+Step -4 : Before write the test cases in the TestClass. Download the required Jar files.
+	download the junit jar files . search the "junit in java" in google. Click the javapoint website. In that website, click the download the junit jar files and extract files.Generate the
+	two jar files (hamcrest-core and junit).
+	
+	=> After download the jar files click the JRE folder in that eclipse project right click it and click the Bulidpath in that click the Configure Build Path.
+	Click the classpath. And click the add external jars in right side. Add the jar files and click apply and apply and close.
+	=> Once add the jar files is completed automatically referenced libraries folder will be generated. In that we have import jar files are available.
+	
+Step - 5: write the Test cases in the TestClass.
+
+	import org.junit.*;
+	public class TestClass {
+		@Test
+		public void test1() {
+			int a[]= {1,2,3,4,5};
+			Assert.assertEquals(5,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test2() {
+			int a[]= {-5,-1,-10,-6,-4};
+			Assert.assertEquals(-1,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test3() {
+			int a[]= {-300,-20,1,60,10};
+			Assert.assertEquals(60,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test4() {
+			Assert.assertEquals(5,ActualClass.lastDigit(675));
+		}
+		
+		@Test
+		public void test5() {
+			Assert.assertEquals(7,ActualClass.lastDigit(-577));
+		}
+		
+	}
+	
+Step - 6:And save all those files. click the Testclass and Click the run option. And in that click the run as "junit test" option. We can see how many test cases are successfull.
+
+
+-------------Maven Project----------------
+=> We can also perform the junit testing by using maven project. It is respositpory in this we have all java jar files are available.
+=> To create the Maven Project...
+
+------------------Steps Involved to excute the junit testing in maven repository---------------
+Step - 1: create the Maven Project. On that click the check button option(Create a simple project) and click the next button.
+	Give the GroupId: realtimeprojectimplementation
+		ArtifactID: test2
+		
+		and Click the finish button. It is created Maven Project Successfully.
+		
+		Hirerachy involves in the maven project.
+		-src/main/java
+		-src/main/resources
+		-src/test/java
+		-src/test/resources
+		-JRE
+		-src
+		-target
+		-POM.xml (Project Object Model)
+		
+Step -2: Click the "src/main/java" folder and create the new class with name as "ActualClass" and remove the package name and main method also. This class is used to write the bussiness logic (Actual Logic).
+
+	
+	public class ActualClass {
+		static int findMax(int a[]) {
+			int max=a[0];
+			for(int i=1;i<a.length;i++) {
+				if(a[i]>max) {
+					max=a[i];
+				}
+			}
+			return max;
+		}
+		
+		static int lastDigit(int n) {
+			return Math.abs(n%10);
+		}
+	}
+
+	=> Click the "src/test/java" folder and create the new class with the name as "TestClass" and remove the package name and main method also. It is used for to write the test Cases for the Actual class.
+	
+	import org.junit.*;
+	public class TestClass {
+		@Test
+		public void test1() {
+			int a[]= {1,2,3,4,5};
+			Assert.assertEquals(5,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test2() {
+			int a[]= {-25,-1,-10,-6,-3};
+			Assert.assertEquals(-1,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test3() {
+			int a[]= {-300,-20,1,60,10};
+			Assert.assertEquals(60,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test4() {
+			Assert.assertEquals(5,ActualClass.lastDigit(675));
+		}
+		
+		@Test
+		public void test5() {
+			Assert.assertEquals(7,ActualClass.lastDigit(-577));
+		}
+	}
+
+Step-3: Search maven repository in the google. Enter the junit jar files and click the version and find the dependency of the jar files. Copy the dependency.
+		<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.13.2</version>
+	    <scope>test</scope>
+	</dependency>
+	
+Step -4: It is set in the POM.xml files in between the <dependencies> </dependencies>. we add multiple dependency in these between.
+
+step-5:After all, right click the mavenproject(test2) and run as maven clean. 
+	After same clicks run as maven install.
+	Then click the TestClass file and right click on it run as junit testing. It will shows the how many test cases are passed or failed and total how many cases we was written.
+	
+	
+	Suppose if you have any error occured in this ask the stackoverflow. It will give the answer.
+	
+	TestClass.java
+	
+	import org.junit.*;
+	public class TestClass {
+		
+		@BeforeClass
+		public static void beforeClass() {
+			System.out.println("Before Class Loading...");
+		}
+		
+		@AfterClass
+		public static void afterClass() {
+			System.out.println("After Class...");
+		}
+		
+		@Before
+		public void before() {
+			System.out.println("Before Every Test Case....");
+		}
+		
+		@After
+		public void after() {
+			System.out.println("After Every Test Case.....");
+		}
+		
+		@Test
+		public void test1() {
+			int a[]= {1,2,3,4,5};
+			Assert.assertEquals(5,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test2() {
+			int a[]= {-25,-1,-10,-6,-3};
+			Assert.assertEquals(-1,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test3() {
+			int a[]= {-300,-20,1,60,10};
+			Assert.assertEquals(60,ActualClass.findMax(a));
+		}
+		
+		@Test
+		public void test4() {
+			Assert.assertEquals(5,ActualClass.lastDigit(675));
+		}
+		
+		@Test
+		public void test5() {
+			Assert.assertEquals(7,ActualClass.lastDigit(-577));
+		}
+	}
+	
+	Output:
+	Before Class Loading...
+Before Every Test Case....
+After Every Test Case.....
+Before Every Test Case....
+After Every Test Case.....
+Before Every Test Case....
+After Every Test Case.....
+Before Every Test Case....
+After Every Test Case.....
+Before Every Test Case....
+After Every Test Case.....
+After Class...
+
+
+-------------------This is the process involved in the Junit Testing by using the Maven repository.........
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
