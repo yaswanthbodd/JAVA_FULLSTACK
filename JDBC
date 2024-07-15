@@ -105,7 +105,7 @@ jad -s.java OracleDriver.class
 	Connection con=DriverManager.getConnection("url","username","password");
 	
 	url - "jdbc:oracle:thin:@systemname:portnumber:servicename"
-	"jdbc:oracle:thin:@localhost:1521:xe";
+	"jdbc:oracle:thin:@localhost:1521:xe";  (or)  "::thin:@localhost:1521:xe"
 	
 	systemname:  systemname / localhost / 127.0.0.1
 	Port Name: 1521
@@ -113,6 +113,8 @@ jad -s.java OracleDriver.class
 	
 	Getting systemname : select sys_context('userenv','server_host')from dual; // dual -- one ananounms table with single column
 	Getting servicename: select sys_context('userenv','instance_name')from dual;
+	
+	=> If the portnumber is not correct then the "network adaptar could not establish the connection" is raised.
 	
 	
 	==========Connected===============
@@ -130,6 +132,7 @@ jad -s.java OracleDriver.class
 			
 			//connection to database step-3
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","scott","tiger");
+			// "::thin:@localhost:1521:xe","username","password"
 			
 			}
 			catch(Exception e) {
@@ -187,11 +190,129 @@ jad -s.java OracleDriver.class
 	select * from tab;
 	
 	
+	SQL> create table emp(eid number,ename varchar2(30), eaddr varchar2(30));
+	SQL> commit;
+	SQL> describe emp;
+	SQL> select * from emp;
 	
 	
+4) ====================== Create the Statement & Execute Queries ===================================
+	1) Statement :
+	---------------
+	Statement stmt=con.createStatement();
+	
+	DDL(Data Definition language) - CREATE,ALTER,TRUNCATE,DROP
+	DML(Data Manipulation Language) - insert,delete,update
+	
+		i) executeUpdate(String qry) - > for DML(insert,delete,update) -> Return int value
+		ii) excuteQuery(String qry) -> Only select command -> Return type ResultSet
+			-----------Methods in ResultSet:-------------------
+			i) next() -> To move the cursor
+		iii) execute(String qry) -> It is used for multiple results.
+	
+	//Step - 4 Create the Statement & exucte queries
+		Statement stmt=con.createStatement();
+		
+		String query="insert into emp values(77,'yaswanth','vtm')";
+		
+		int n = stmt.executeUpdate(query);
+		
+		if(n!=0) {
+			System.out.println("1 row inserted SUccessfully...");
+		}
+	
+		stmt.excuteUpdate(String qry);
+		
+		
+	------------------- OR ---------------------------
+	
+	===Dynamic give the values=========
+	Statement stmt=con.createStatement();
+		
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("Enter emp id: ");
+		int eid=sc.nextInt();
+		
+		System.out.println("Enter emp name: ");
+		String ename=sc.nextLine();
+		
+		System.out.println("Enter emp address: ");
+		String eaddr=sc.nextLine();
+		
+		String qry="insert into emp values("+eid+",'"+ename+"','"+eaddr+"')";
+		
+		stmt.executeUpdate(qry);
+		System.out.println("1 row inserted the Successfully..");
+		
+	//Step - 5: Fetch the results and print
+		
+		Statement stmt=con.createStatement();
+		
+		String qry="select * from emp";
+		
+		ResultSet rs=stmt.executeQuery(qry);
+		
+		while(rs.next()) {
+			System.out.println(rs.getInt("eid")); //or System.out.println(rs.getInt(1));
+			System.out.println(rs.getString("ename"));
+			System.out.println(rs.getString("eaddr"));
+			System.out.println(rs.getInt("eid")+" "+rs.getInt("ename")+" "+rs.getInt("eaddr"));
+		}
+		}
 	
 	
+	DrawBacks:
+	-----------------
 	
+	SQL INJEcTION ATTACK : injecting some unwanted data (miscellaneous code) To steal the actual information.
+	How to check the sql injection 
+	-create the table users(uname,pwd,addr)
+	-insert the values into it
+	
+	-in this give "'--" //Comment the after all data after '-- . so It will stolen the data entire data.
+	
+	-In below code is miscellaneous queries: It will give entire data
+	select * from users where uname='abc'-- and pwd='abc123'; 
+			or
+	select * from users-- where uname='abc' and pwd='abc123';
+	
+	i)Normal Statement can't control the sql injections.
+	ii)Excute the insertion
+	insert the query(100 times) 
+		-> syntax checking & interpriting 1 sec
+		-> execute the query 1sec
+		
+	iii)In the normal statement to insert the dynamic values in the query we need to remember the string concatenation. In the Prepared Statement we have placeholders concept is there.
+	iv) In the normal statement sub query is possible.
+	2) PreparedStatement :
+	
+	-It is pre Complied query.
+	-insert the multiple values (100 times) . It takes for the only first time
+		-> syntax checking & interpriting 1 sec
+		-> execute the query 1sec
+		
+		remaining 99 times
+		->excute the query 1 sec
+		
+	//Prepared Statement Step - 4
+		String qry="insert into emp values(?,?,?)";
+		PreparedStatement pstmt= con.prepareStatement(qry);
+		
+		int eid=10;
+		String ename="yash";
+		String pwd="yash";
+		
+		pstmt.setInt(1, eid);
+		pstmt.setString(2, ename);
+		pstmt.setString(3, pwd);
+		
+		pstmt.executeUpdate();
+		
+		
+	
+	
+	3) CallableStatement	
 	
 	
 	
