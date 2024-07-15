@@ -1,0 +1,93 @@
+Web Application Archtecture
+=================================
+
+Front End----
+=> Html
+=> CSS
+=> JavaScript (ReactJs)
+
+Server Related Technology
+----------------------------
+Servlets / JSP(Java Servlet Pages) / Structs / Spring boot / RESTFul API
+
+Java Application to DB
+==========================
+JDBC/ Hibernate
+
+Databases
+================
+Oracle
+
+Servers
+==================
+Apache Tomcat / JBOSS/ JRocket
+
+
+
+------------------Different---------------------
+--------Java--------------
+=====Front End =========
+HTML
+CSS
+JavaScript
+
+=====Server-side========
+Servlets/JSP/structs/spring/REST API
+
+=====Database===========
+Oracle
+
+=====App to DB==========
+JDBC/Hibernate
+
+====servers=============
+Apache Tomacat/JBOSS/JRocket
+
+====IDEs================
+Eclipse
+NetBean
+Vs Code
+
+
+------------.NET---------------
+=====Front End =========
+HTML
+CSS
+JavaScript
+
+=====Server-side========
+ASP.NET (Active server pages)
+
+=====Database===========
+MS SQL
+
+=====App to DB==========
+ADO.NET (Actice Data Object)
+
+====servers=============
+IIS / Microsoft Azure / etc...
+====IDEs================
+Vs Code
+
+
+
+-----------PHP-----------------
+=====Front End =========
+HTML
+CSS
+JavaScript
+
+=====Server-side========
+PHP Script
+
+=====Database===========
+My Sql
+
+=====App to DB==========
+PHP Script
+
+====servers=============
+WAMP / XAMPP
+
+====IDEs================
+Vs Code

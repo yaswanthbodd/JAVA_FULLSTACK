@@ -1,0 +1,209 @@
+-------------------------------JDBC(Java Database Connection)---------------------------------
+=> JDBC is an API. (java.sql)
+- We can establish the communication in between Java Technology and different Database vendors.
+Package java.sql.*;
+========================
+Interfaces
+-----------
+Connection
+Blob
+Clob
+
+Statement 
+-----------
+Prepared Statement
+Callabale Statement
+
+ResultSet
+ResultSetMetaData
+
+etc.......
+
+Classes
+------------------
+DriverManager
+Time
+TimeStamp
+
+
+
+Exception Classes
+-----------------------
+SQLEXception
+
+
+==============JDBC==================
+Steps Involved in JDBC Connectivity
+
+1) Import that JDBC package (java.sql.*)
+example: 	import java.sql.*;
+
+2) Load/ Register Database Driver Class
+	driver.jar file(actual driver class to drive from J to D)
+	
+	register Driver class
+	------------------------
+	
+	ojdbc14.jar (oracle.jdbc.driver.OracleDriver)
+	mysql_connector (com.mysql.jdbc.Driver)
+	
+JAVA DECOMPLIE the clas
+jad -s.java OracleDriver.class
+
+
+	register Driver class
+	-------------------------
+	1) Create the object the driver class and pass it to the DriverManager class
+	oracle.jdbc.driver.OracleDriver od=new oracle.jdbc.driver.OracleDriver();
+	
+	 DriverManager.registerDriver(od);
+	 
+	 ---- Set the class Path-----------
+	 set classpath=%classpath%;.;ojdbc14.jar;.;
+	 
+		import java.sql.*;
+
+		public class JDBCEx {
+
+		    public static void main(String[] args) throws Exception {
+			oracle.jdbc.driver.OracleDriver od=new oracle.jdbc.driver.OracleDriver();
+			DriverManager.registerDriver(od);
+			System.out.println("Driver class registered Successfully...");
+		    }
+		}
+	 
+	 
+	 Loading The Driver Class
+	 -------------------------------
+	 Class.forName("Driver Class name"); //Fully qualified name
+	 Class.forName("oracle.jdbc.driver.OracleDriver");
+	 --- Pass the argument in the Class.forName it will excutes the Static block.
+	 
+	package jdbc;
+	import java.sql.*;
+
+
+	public class JDBCEx {
+
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			System.out.println("Load the data Succesfully");
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			
+		}
+
+	}
+	
+	
+3) =========================CONNECTION ESTABLISHMENT======================================
+	
+	Connection con=DriverManager.getConnection("url","username","password");
+	
+	url - "jdbc:oracle:thin:@systemname:portnumber:servicename"
+	"jdbc:oracle:thin:@localhost:1521:xe";
+	
+	systemname:  systemname / localhost / 127.0.0.1
+	Port Name: 1521
+	
+	
+	Getting systemname : select sys_context('userenv','server_host')from dual; // dual -- one ananounms table with single column
+	Getting servicename: select sys_context('userenv','instance_name')from dual;
+	
+	
+	==========Connected===============
+	package jdbc;
+	import java.sql.*; //step -1
+
+	public class JDBCEx {
+
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			//step-2
+			try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			System.out.println("Load the data Succesfully");
+			
+			//connection to database step-3
+			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","scott","tiger");
+			
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			
+		}
+
+	}
+
+	
+	--------------Download the oracle10g database----------------
+	-----------Connect to Oracle Database-----------
+	connect system/manager
+	
+	connect username/pasword
+	
+	connect system
+	Password: 
+	
+	Select * from tabs;
+	select * from all_users; --- To show all the users
+	drop user nsr;
+	drop user nsr cascade
+	
+	------ How to create the user ----------------
+	Creating User
+	
+	=> create user username identified by password;
+	Example: create user yash identified by password;
+	User Created..
+	
+	How to connect
+	connect yash/password;
+	
+	Main User COnnection
+	connect system/manager
+	
+	op: Connected.
+	
+	------How to give the permissions to the users------------
+	1) grant all privileges to username;
+	
+	ex: grant all privileges to yash;
+	
+	2) grant connect,resource to username;
+	ex: grant connect,resource to yash; //It will access to the DDL,DML commands excutes only
+	
+	Main User Check....... show user;
+	connect yash/password;
+	
+	show user;
+	
+	---Check the tables in or not--------
+	select * from tab;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
