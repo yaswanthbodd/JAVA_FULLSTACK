@@ -313,18 +313,168 @@ jad -s.java OracleDriver.class
 	
 	
 	3) CallableStatement	
+	 - It is used to store the procedures and sub functions.
+	 **sub-function:  
+	stored Procedures: It is stored multiple queries excutes at a time. Existing table is required for the stored procedures.
+	
+	---Create the procedure----
+	create or replace procedure "EXAMPLE" (id IN NUMBER,name IN VARCHAR2,addr IN VARCHAR2)
+	as
+	begin
+	
+	delete from emp where ename='seetha';
+	update emp set sname='suresh' where eid=10;
+	insert into student values(id,name,addr);
+	
+	end;
+	/
+	
+	** sub function:
+	create or replace function mysum(n1 in number, n2 in number) return number
+	is
+	
+	temp number(8);
+	
+	begin
+	
+	temp :=n1+n2;
+	return temp;
+	
+	end;
+	/
+	
+	-==Excute the functions: select mysum(100,200) from dual;
+	
+	CallableStatement stmt=con.prepareCall("{call myprocedure(?,?,?)}");
 	
 	
+===================ResultSet natures================================
+
+type
+-----------
+forward-only - 
+scroll-sensitive
+scroll-insensitive
+
+constant_variables:
+ResultSet.TYPE_FORWARD_ONLY (default) :- It only print values in the forward direction. (Top to Down) - 1003(Integer Number for forwardonly)
+ResultSet.TYPE_SCROLL_INSENSITIVE :- You can print the values at any position in the row. Both forward and backward direction. Original data is fetched. - 1004(Integer Number for scroll insensitive)
+ResultSet.TYPE_SCROLL_SENSITIVE (Not supported) - Suppose while at the time of fetching another data is updated . This fucntion is used the scroll_sensitive. - 1005(Integer Number for scroll sensitive)
+
+concurrency type
+------------------
+read-only
+updatable
+
+ResultSet.CONCUR_READ_ONLY (default) :- The reference variable is used to print the records only.
+ResultSet.CONCUR_UPDATABLE: - The reference variable is used to insert,update,delete and print the table. Don't write the query.
+
+follows:
+1) forward-only/read-only
+2) forward-only/upatable
+3) scroll-sensitive/read-only
+4) scroll-sensitive/updatable
+5) scroll-insensitive/read-only
+6) scroll-insensitive/updatable
 	
+** ALl this possible combinations it will set while at the time of preparation of statement.
+
+Example:
+Statment
+--------------
+
+Statement stmt=con.createStatement(); //Default
+
+Statement stmt=con.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY); //Overriding method
+
+preparedStatemts:
+------------------------
+PreparedStatement pstmt=con.prepareStatment(qry); //Default
+
+PreparedStatement pstmt=con.prepareStatement(qry,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
+callableStatement:
+-------------------
+
+CallableStatement cstmt = con.prepareCall("{}"); //Default
+
+CallableStatement cstmt = con.prepareCall("{call example(?,?,?)}",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
+Example - 1:
+
+Statement stmt=con.createStatement();
+String qry="select * from emp";
+ResultSet rs=stmt.executeQuery(qry);
+System.out.println(rs.getType());
+System.out.println(rs.getConcurrency());
+while(rs.next()){
+	System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}
+
+Example - 2:
+
+Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+String qry="select * from emp";
+ResultSet rs=stmt.executeQuery(qry);
+System.out.println(rs.getType());
+System.out.println(rs.getConcurrency());
+while(rs.next()){
+	System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}	
+
+in sql - $commit;
+
+** In the oracle Sensitive and updatable is not worked. we can exlipictly mention it is automatically downcast the method to readonly.
+
+Example - 3: print the values from the last row to first. (bottom to top)
+
+Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+String qry="select * from emp";
+ResultSet rs=stmt.executeQuery(qry);
+System.out.println(rs.getType());
+System.out.println(rs.getConcurrency());
+System.out.println("Print the data in the forward direction");
+while(rs.next()){
+	System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}	
+
+rs.afterLast();
+System.out.println("Print the data in the backward direction");
+while(rs.previous()){
+	System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}
+
+rs.absolute(3) // index row start
+while(rs.next()){
+System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}
+
+Example -4: Update the records by using the result set reference variable
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+while(rs.next()){
+	try{
+		Thread.sleep(3000);
+	}catch(Exception e){
+	}
+	System.out.println(rs.getInt(1)+" "+rs.getString(2));
+}
+
+** ResultMetaData
+Method: public int getColumnCount() throws SQLException
+public String getColumnName(int index)throws SQLException
+public string getColumnTypeName(int index)throws SQLException
+
+Example - 1:
+
+Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+String qry="select * from emp";
+ResultSet rs=stmt.executeQuery(qry);
+ResultSetMetaData rsmd=rs.getMetaData();
+System.out.println("Total columns: "+rsmd.getColumnCount());
+System.out.println("Total columns: "+rsmd.getColumnName(1));
+System.out.println("Total columns: "+rsmd.getColumnName(2));
+System.out.println("Total columns: "+rsmd.getColumnName(3));
+System.out.println("Data Type: "+rsmd.getColumnTypeName(1));
+
+
 	
