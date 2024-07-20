@@ -1,0 +1,344 @@
+------------------servlets---------------------------------
+1bit - 0 or 1
+1 nibble - combinations of 4 bits ( 0 or 1)
+1 byte - 8 bits
+1 register - 32 bits
+1 word - 2 bytes(16 bits)
+1kb - 1024 bytes
+1mb - 1024 kb
+1gb - 1024 mb
+1tb - 1024 gb
+1pt - 1024 tb
+1exabyte - 1024 petabyte
+1zettabyte - 1024 exabyte
+1yottabyte - 1024 zettabyte
+
+server : It takes the client request and processes it and produces the output in the formate of response.
+
+404-Not Found => server is running but the application is stop mode.
+This site not can't Reached (refused the connect)=> Server is stop mode.
+
+Now in the server to run or execute the business logic and produce as per client request . we need server related technologies are required . 
+***Those are servlets, JSP, struct, springboot.
+
+-------------SERVLET----------------
+=> It is an API. In that two important packages are javax.servlet.*; , javax.servlet.http.*; . This two packages are available in java enterprise edition.
+=> The purpose of servlet is to develop the dynamic data driven web applications through tomcat server.
+
+---------javax.servlet.*;---------------------
+====Interfaces=======
+Servlet - In this Execution life cycle phases(Servlet Mechanism) are there. 
+ServletRequest - To hold the requested information from the client.
+ServletResponse - Fetch the result in the server side. It display in the form of UI/UX.
+ServletConfig - IT is maintaining the configuration information(If there are any dynamic changes in the website. It is written in xml).
+ServletContext - It is same as ServletConfig. Suppose we change the dynamic changes to all servlets pages we use the ServletContext.
+RequestDispatcher - Transfer the resources (request , response) from one servlet page to another page. (Connection)
+Filter - Serialization and deserialization.
+serialization - representing an objects state as a byte stream.
+deserialization - reconstructing the object from the serialized State.
+............
+======Classes===========
+GenericServlet 
+ServletInputStream
+ServletOutputStrem
+======Exceptions========
+ServletException
+
+----------javax.servlet.http.*;--------
+=====Interface============
+HttpServletRequest - 
+HttpServletResponse - 
+HttpSession - Peristance(Until you logout it is alive )
+
+---------classes-------------
+Cookie
+HttpServlet
+
+
+----How to convert java class into servlet class------------------
+1)by implementing servlet interface
+2)by extends GenericServlet class
+3)by extends HttpServlet class
+
+
+------ 1) by implementing servlet interface -------------
+
+import javax.servlet.*;
+public class MyServlet implements Servlet{
+
+
+}
+
+-- The above code is write but error is rised. javax.servlet doesn't not exit.
+-- The javax.servlet jar is existing in C:\Program Files\Apache Software Foundation\Tomcat 9.0\lib\
+-- Set the classpath --- C:\Users\PAVAN KUMAR REDDY\Desktop\Wipro_training>set classpath=%classpath%;.;C:\Program Files\Apache Software Foundation\Tomcat 9.0\lib\servlet-api.jar;.;
+-- In this five abstract methods are important 
+	I) public void init(ServletConfig conifg) - It is first step in servlet. It is invoked only one time in servlet. It is initialized and hold the ServletConfig.
+	ii) public void service(ServletRequest req,ServletResponse res) - Write the business logic in it. for every request service method is executed.
+	iii) public void destroy() - It is called only while at the time of stoping application
+	---The above three are life cycle methods of Servlets
+	iv) public ServletConfig getServletConfig()
+	v) public String getServletInfo()
+	--- The above two are non cycle methods.
+
+JAVA CODE:
+import javax.servlet.*;
+import java.io.*;
+public class MyServlet implements Servlet{
+	ServletConfig config=null;
+	public void init(ServletConfig config){
+		this.config = config;
+		System.out.println("Servlet init method executed Succesfully.....");
+	}
+	public void service(ServletRequest req,ServletResponse res) throws IOException,ServletException{
+		System.out.println("servlet serivce method executed Succesfully..");
+	}
+	public void destroy(){
+		System.out.println("Servlet Destriy method executed Succesfully...");
+	}
+	public String getServletInfo(){
+		return "MyServlet Java 1.8 author yash";
+	}	
+	public ServletConfig getServletConfig() {
+		return config;
+	}
+
+}
+
+Servlet Directory Structure:--------
+
+Main Project Folder Name:
+--------------------
+	|-WEB-INF
+	|	|-src - (java code)
+	|	|-classes - .class files
+	|	|-lib - (external jar files )
+	|	|-web.xml
+	|
+	|-script
+	|-images
+	|-(.html,.jsp)
+	|-css
+
+--- Open C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin\tomcat9 is used to open server command line prompt to check the init, service and destroy method.
+
+Update the code:---
+import javax.servlet.*;
+import java.io.*;
+public class MyServlet implements Servlet{
+	ServletConfig config=null;
+	public void init(ServletConfig config){
+		this.config = config;
+		System.out.println("Servlet init method executed Succesfully.....");
+	}
+	public void service(ServletRequest req,ServletResponse res) throws IOException,ServletException{
+		System.out.println("servlet serivce method executed Succesfully..");
+		res.setContentType("text/html");
+		PrintWriter out=res.getWriter();
+		out.println("welcome to servlet");
+	}
+	public void destroy(){
+		System.out.println("Servlet Destriy method executed Succesfully...");
+	}
+	public String getServletInfo(){
+		return "MyServlet Java 1.8 author yash";
+	}	
+	public ServletConfig getServletConfig() {
+		return config;
+	}
+
+}
+
+web.xml:
+<web-app>
+	<servlet>
+		<servlet-name>S1</servlet-name>
+		<servlet-class>MyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>S1</servlet-name>
+		<url-pattern>/execute</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+index.html:
+<html>
+	<head> 
+		<title>Index</title>
+	</head>
+	<body> 
+		<h1>This server is running...</h1>
+		<a href="execute"> Click me to Execute servlet code </a>
+	</body>
+</html>
+
+
+----------------- 2) by extends GenericServlet class (It is only provide 4 methods)------------------
+
+import javax.servlet.*;
+import java.io.*;
+public class MyServlet extends GenericServlet{
+	public void service(ServletRequest req,ServletResponse res) throws IOException,ServletException{
+		 // System.out.println("servlet serivce method executed Succesfully..");
+		res.setContentType("text/html");
+		PrintWriter out=res.getWriter();
+		out.println("Generic Servlet Example");
+	}
+	
+
+}
+
+
+Example login page in GenericServlets:
+index.html:
+<html>
+	<head> 
+		<title>Differece between Genric and http servlet</title>
+	</head>
+	<body> 
+		<h1>This server is running...</h1>
+		<form name="myform" action="execute"> 
+			Enter User name: <input type="text" name="uname" /> </br>
+			Enter Password: <input type="password" name="pwd" /> </br>
+			<input type="submit" value="submit"/>
+		</form>
+	</body>
+</html>
+
+src code (MyServlet.java):
+import javax.servlet.*;
+import java.io.*;
+public class MyServlet extends GenericServlet{
+	public void service(ServletRequest req,ServletResponse res) throws IOException,ServletException{
+		 // System.out.println("servlet serivce method executed Succesfully..");
+		res.setContentType("text/html");
+		PrintWriter out=res.getWriter();
+		//out.println("Generic Servlet Example");
+
+		String un=req.getParameter("uname");
+		String pw=req.getParameter("pwd");
+		if(un.equals("cse") && pw.equals("cse123")){
+			out.print("valid User");
+		}else{
+			out.print("Invalid User");
+		}
+	}
+	
+
+}
+
+------------------ 3) by extends HttpServlet --------------------------
+index.html
+
+<html>
+	<head> 
+		<title>Differece between Genric and http servlet</title>
+	</head>
+	<body> 
+		<h1>This server is running...</h1>
+		<form name="myform" method="POST" action="execute"> 
+			Enter User name: <input type="text" name="uname" /> </br>
+			Enter Password: <input type="password" name="pwd" /> </br>
+			<input type="submit" value="submit"/>
+		</form>
+	</body>
+</html>
+
+index.html : The below doesn't work because its method is get. (HTTP Status 405 - Method Not Allowed)
+<html>
+	<head> 
+		<title>Differece between Genric and http servlet</title>
+	</head>
+	<body> 
+		<h1>This server is running...</h1>
+		<form name="myform" method="GET" action="execute"> 
+			Enter User name: <input type="text" name="uname" /> </br>
+			Enter Password: <input type="password" name="pwd" /> </br>
+			<input type="submit" value="submit"/>
+		</form>
+	</body>
+</html>
+
+MyServlet.java:
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class MyServlet extends HttpServlet{
+	protected void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException{
+
+		res.setContentType("text/html");
+		PrintWriter out=res.getWriter();
+
+		String un=req.getParameter("uname");
+		String pw=req.getParameter("pwd");
+		if(un.equals("cse") && pw.equals("cse123")){
+			out.print("valid User");
+		}else{
+			out.print("Invalid User");
+		}
+	}
+	
+
+}
+
+web.xml:
+<web-app>
+	<servlet>
+		<servlet-name>S1</servlet-name>
+		<servlet-class>MyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>S1</servlet-name>
+		<url-pattern>/execute</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+-------------------------------Example 2 ------------------------
+index.html
+<html>
+	<head> 
+		<title>Differece between Genric and http servlet</title>
+		<script> 
+			function myFun(){
+				var un = document.myform.uname.value;
+				var ps = document.myform.pwd.value;
+				
+				if(un==""){
+					alert("please fill user name");
+					return false;
+				}
+				if(ps==""){
+					alert("please fill the password");
+					return false;
+				}
+				return true;
+			}
+		</script>
+	</head>
+	<body> 
+		<h1>This server is running...</h1>
+		<form name="myform" method="POST" onSubmit="return myFun()" action="execute"> 
+			Enter User name: <input type="text" name="uname" /> </br>
+			Enter Password: <input type="password" name="pwd" /> </br>
+			<input type="submit" value="submit"/>
+		</form>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
